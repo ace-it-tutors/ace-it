@@ -17,6 +17,7 @@ export class LoginActions {
   }
 
   private setID(id: string) {
+    console.log("YAAAAA I'm setID");
     return {
       type: LOGIN_ACTIONS.SET_USER_ID,
       payload: id
