@@ -2,7 +2,6 @@ import { NgRedux } from 'ng2-redux';
 import { Injectable } from '@angular/core';
 import { IAppState } from '../store';
 
-
 export const LOGIN_ACTIONS = {
   SET_USER_ID: 'SET_USER_ID'
 };
@@ -12,16 +11,9 @@ export class LoginActions {
   constructor(private ngRedux: NgRedux<any>) {}
 
   setLoginDispatch(id: string) {
-    console.log("YOOO I'm in setLoginDispatch and I'm about to dispatch setId");
-    this.ngRedux.dispatch(this.setID(id));
+    this.ngRedux.dispatch({
+      type: LOGIN_ACTIONS.SET_USER_ID, 
+      userID: id
+    });
   }
-
-  private setID(id: string) {
-    console.log("YAAAAA I'm setID");
-    return {
-      type: LOGIN_ACTIONS.SET_USER_ID,
-      payload: id
-    };
-  }
-
 }
