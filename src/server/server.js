@@ -4,10 +4,13 @@ var bodyParser = require('body-parser');
 var db = require('./queries');
 var path = require('path');
 
+var PORT = process.env.PORT || 3000;
+
 var app = express();
 var server = http.createServer(app);
+
 var io = require('socket.io').listen(server);
-var PORT = process.env.PORT || 3000;
+require('./socket')(io);
 
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../dist'));
