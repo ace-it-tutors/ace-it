@@ -4,12 +4,16 @@ import { NgRedux } from 'ng2-redux';
 import { IAppState, } from '../store/index';
 import { Auth } from '../services/auth.service';
 import { Router,
-         ROUTER_DIRECTIVES }    from '@angular/router';
+         ROUTER_DIRECTIVES,
+         ActivatedRouteSnapshot,
+         RouterStateSnapshot }    from '@angular/router';
+import { LoginActions } from '../actions/login.actions';
 
 
 @Component({
   selector: 'log-in',
   directives: [ ROUTER_DIRECTIVES ],
+  providers: [ LoginActions ],
   styles: [`
     a {
       color: white;
@@ -45,7 +49,8 @@ export class LoginComponent {
   constructor(
     private auth: Auth,
     private router: Router,
-    private ngRedux: NgRedux<IAppState>
+    private ngRedux: NgRedux<IAppState>,
+    private actions: LoginActions
     ) { }
 
     goToSignup() {
