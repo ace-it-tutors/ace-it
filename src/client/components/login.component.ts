@@ -2,12 +2,10 @@
 import { Component } from '@angular/core';
 import { NgRedux, select } from 'ng2-redux';
 import { Observable } from 'rxjs/Rx';
-import { IAppState, rootReducer, enhancers } from '../store/index';
+import { IAppState } from '../store/index';
 import { Auth } from '../services/auth.service';
 import { Router,
-         ROUTER_DIRECTIVES,
-         ActivatedRouteSnapshot,
-         RouterStateSnapshot }    from '@angular/router';
+         ROUTER_DIRECTIVES }    from '@angular/router';
 import { LoginActions } from '../actions/login.actions';
 
 
@@ -62,12 +60,14 @@ export class LoginComponent {
     this.auth.login(username, password, function(response){
       let userID = response.idTokenPayload.sub;
       this.actions.setLoginDispatch(userID);
-    }.bind(this))
+    }.bind(this));
   }
-  googleLogin (){
+
+  googleLogin () {
     this.auth.googleLogin();
   }
-  goToSignup(){
+
+  goToSignup() {
     this.router.navigate(['/sign-up']);
   }
 }

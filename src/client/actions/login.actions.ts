@@ -1,6 +1,5 @@
 import { NgRedux } from 'ng2-redux';
 import { Injectable } from '@angular/core';
-import { IAppState } from '../store';
 
 export const LOGIN_ACTIONS = {
   SET_USER_ID: 'SET_USER_ID'
@@ -12,7 +11,7 @@ export class LoginActions {
 
   setLoginDispatch(id: string) {
     this.ngRedux.dispatch({
-      type: LOGIN_ACTIONS.SET_USER_ID, 
+      type: LOGIN_ACTIONS.SET_USER_ID,
       userID: id
     });
   }

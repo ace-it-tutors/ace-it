@@ -46,7 +46,7 @@ export class Auth {
       email: username,
       password: password,
     }, function(err, response) {
-      if (err) alert("something went wrong: " + err.message);
+      if (err) alert('something went wrong: ' + err.message);
       callback(response);
     });
   };

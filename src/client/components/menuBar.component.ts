@@ -11,7 +11,9 @@ import { Auth } from '../services/auth.service';
 
 @Component({
   selector: 'menu-bar',
-  directives: [ LoginComponent, SignUpComponent, StudentDashboardComponent, TeacherDashboardComponent, AdvancedSearchComponent, ROUTER_DIRECTIVES ],
+  directives: [
+    LoginComponent, SignUpComponent, StudentDashboardComponent,
+    TeacherDashboardComponent, AdvancedSearchComponent, ROUTER_DIRECTIVES ],
   template: `
   <nav>
     <a routerLink="/student-dash" routerLinkActive="active">Student Dashboard</a>

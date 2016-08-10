@@ -1,7 +1,7 @@
 import { LOGIN_ACTIONS } from '../actions/login.actions';
 
 export interface ILoginState {
-  userID: string
+  userID: string;
 }
 
 const INIT_STATE: ILoginState = {
@@ -10,7 +10,8 @@ const INIT_STATE: ILoginState = {
 
 export function loginReducer(
   state = INIT_STATE,
-  action): ILoginState {
+  action
+  ): ILoginState {
     switch (action.type) {
       case LOGIN_ACTIONS.SET_USER_ID:
         let userID = action.userID;

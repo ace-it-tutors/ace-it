@@ -13,7 +13,9 @@ import { Auth } from '../services/auth.service';
 
 @Component({
   selector: 'app',
-  directives: [ SearchBarComponent, StudentDashboardComponent, MenuBarComponent, LoginComponent, AdvancedSearchComponent, ROUTER_DIRECTIVES ],
+  directives: [
+    SearchBarComponent, StudentDashboardComponent, MenuBarComponent,
+    LoginComponent, AdvancedSearchComponent, ROUTER_DIRECTIVES ],
   pipes: [ AsyncPipe ],
   providers: [ DevToolsExtension, ConfigureStoreService, Auth ],
   template: `
