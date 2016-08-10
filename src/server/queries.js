@@ -43,7 +43,7 @@ function getSingleUser(req, res, next){
 };
 
 function createUser(req, res, next){
-    db.none('insert into users(email authid)' + 'values(${email}, ${authid})', req.body)
+    db.none('insert into users(email, authid)' + 'values(${email}, ${authid})', req.body)
     .then(function () {
       res.status(200)
         .json({
@@ -235,7 +235,7 @@ function removeSubjectByUser(req, res, next){
   var userID = req.params.userID;
   var subjectID = parseInt(req.params.subjectID);
     db.result('DELETE FROM learning AS l USING users AS u WHERE l.userID = u.id AND u.authID = $1 AND l.subjectID = $2' , [userID, subjectID])
-    
+
     .then(function (result) {
       res.status(200)
         .json({

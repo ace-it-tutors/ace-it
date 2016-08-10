@@ -1,16 +1,19 @@
-//require the modules that we need
 var express = require('express');
 var http = require('http');
-var path = require('path');
 var bodyParser = require('body-parser');
-var router = express.Router();
 var db = require('./queries');
 var path = require('path');
-//initialize the app as an express app
-var app = express();
+
 var PORT = process.env.PORT || 3000;
 
+var app = express();
+var server = http.createServer(app);
+
+var io = require('socket.io').listen(server);
+require('./socket')(io);
+
 app.use(bodyParser.json());
+app.use(express.static(__dirname + '/../dist'));
 
 app.get('/api/users', db.getAllUsers);
 app.get('/api/users/:id', db.getSingleUser);
@@ -29,15 +32,13 @@ app.get('/api/learning/:id', db.findSubjectsByUser);
 app.delete('/api/learning/:userID/:subjectID', db.removeSubjectByUser);
 
 
-app.use(express.static(__dirname + '/../dist'));
-
 // serve `index.html` to all unmatched routes as a failsafe, to account for
 // html5 pushstate. it would be better to only do this for valid routes
 app.get('*', function(req, res) {
   res.sendFile(path.resolve(__dirname, '..', 'client', 'index.html'));
 });
 
-app.listen(PORT, function() {
+server.listen(PORT, function() {
   console.log("So many tacos here on 3000");
 });
 
