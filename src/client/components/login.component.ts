@@ -14,7 +14,7 @@ import { LoginActions } from '../actions/login.actions';
 @Component({
   selector: 'log-in',
   directives: [ ROUTER_DIRECTIVES ],
-  providers: [ LoginActions, NgRedux ],
+  providers: [ LoginActions ],
   styles: [`
     a {
       color: white;
@@ -56,24 +56,18 @@ export class LoginComponent {
     private router: Router,
     private ngRedux: NgRedux<IAppState>,
     private actions: LoginActions
-    ) {
-    //this.ngRedux.provideStore(store);
-   }
+    ) { }
 
-    login(username, password) {
-      //console.log("Login Actions", this.actions.setLoginDispatch)
-      // this.auth.login(username, password, function(response){
-      //   console.log("Response from auth", response);
-      //   let userID = response.idTokenPayload.sub;
-      //   console.log(userID);
-      //   this.actions.setLoginDispatch(userID);
-      //   console.log("state", this.state);
-      // })
-    }
-    googleLogin (){
-      this.auth.googleLogin();
-    }
-    goToSignup(){
-      this.router.navigate(['/sign-up']);
-    }
+  login(username, password) {
+    this.auth.login(username, password, function(response){
+      let userID = response.idTokenPayload.sub;
+      this.actions.setLoginDispatch(userID);
+    }.bind(this))
+  }
+  googleLogin (){
+    this.auth.googleLogin();
+  }
+  goToSignup(){
+    this.router.navigate(['/sign-up']);
+  }
 }
