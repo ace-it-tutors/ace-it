@@ -39,14 +39,15 @@ export class Auth {
     });
   };
 
-  public login(username, password) {
+  public login(username, password, callback) {
     this.auth0.login({
       connection: 'Username-Password-Authentication',
       responseType: 'code',
       email: username,
       password: password,
-    }, function(err) {
+    }, function(err, response) {
       if (err) alert('something went wrong: ' + err.message);
+      callback(response);
     });
   };
 
