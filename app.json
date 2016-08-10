@@ -5,6 +5,9 @@
   "env": {
     "NPM_CONFIG_PRODUCTION": {
       "value": "false"
+    },
+    "DATABASE_URL": {
+      "value": "postgres://lruckgusmjbrke:jgabP4faJjhGZD_65UN3VpDdfe@ec2-184-73-222-90.compute-1.amazonaws.com:5432/d2h8ofe2oj9ssl"
     }
   },
   "formation": {
