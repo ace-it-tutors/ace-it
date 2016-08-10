@@ -8,7 +8,7 @@ const INIT_STATE: ILoginState = {
   userID: ''
 };
 
-export function searchReducer(
+export function loginReducer(
   state = INIT_STATE,
   action): ILoginState {
 
