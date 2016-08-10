@@ -1,7 +1,8 @@
 //Should have username and password fields
 import { Component } from '@angular/core';
-import { NgRedux } from 'ng2-redux';
-import { IAppState, } from '../store/index';
+import { NgRedux, select } from 'ng2-redux';
+import { Observable } from 'rxjs/Rx';
+import { IAppState, rootReducer, enhancers } from '../store/index';
 import { Auth } from '../services/auth.service';
 import { Router,
          ROUTER_DIRECTIVES,
@@ -13,7 +14,7 @@ import { LoginActions } from '../actions/login.actions';
 @Component({
   selector: 'log-in',
   directives: [ ROUTER_DIRECTIVES ],
-  providers: [ LoginActions ],
+  providers: [ LoginActions, NgRedux ],
   styles: [`
     a {
       color: white;
@@ -32,8 +33,8 @@ import { LoginActions } from '../actions/login.actions';
                 <label for="name">Password</label>
                 <input type="password" class="form-control" #password placeholder="your password">
               </div>
-              <button type="submit" class="btn btn-default" (click)="auth.login(username.value, password.value)">Login</button>
-               <button type="submit" class="btn btn-default btn-primary" (click)="auth.googleLogin()">Login with google</button>
+              <button type="submit" class="btn btn-default" (click)="login(username.value, password.value)">Login</button>
+               <button type="submit" class="btn btn-default btn-primary" (click)="googleLogin()">Login with google</button>
               <h4>Don't have an account yet?</h4>
             </form>
             <button type="submit" class="btn btn-default btn-primary">
@@ -46,14 +47,33 @@ import { LoginActions } from '../actions/login.actions';
 })
 export class LoginComponent {
 
+  @select() userID$: Observable<string>;
+
+  userID: string;
+
   constructor(
     private auth: Auth,
     private router: Router,
     private ngRedux: NgRedux<IAppState>,
     private actions: LoginActions
-    ) { }
+    ) {
+    //this.ngRedux.provideStore(store);
+   }
 
-    goToSignup() {
+    login(username, password) {
+      //console.log("Login Actions", this.actions.setLoginDispatch)
+      // this.auth.login(username, password, function(response){
+      //   console.log("Response from auth", response);
+      //   let userID = response.idTokenPayload.sub;
+      //   console.log(userID);
+      //   this.actions.setLoginDispatch(userID);
+      //   console.log("state", this.state);
+      // })
+    }
+    googleLogin (){
+      this.auth.googleLogin();
+    }
+    goToSignup(){
       this.router.navigate(['/sign-up']);
     }
 }
