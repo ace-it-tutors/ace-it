@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NgRedux, DevToolsExtension } from 'ng2-redux';
+import { Store } from 'redux';
 import { IAppState, rootReducer, enhancers } from '../store';
 const createLogger = require('redux-logger');
 
@@ -21,4 +22,5 @@ export class ConfigureStoreService {
       ]
     );
   }
+  
 }
