@@ -27,8 +27,9 @@ function getAllUsers(req, res, next) {
 }
 
 function getSingleUser(req, res, next){
-  var userID = parseInt(req.params.id);
-    db.one('select * from users where id = $1', [userID])
+  var authID = req.params.authID;
+  console.log('in getSingleUser', authID);
+    db.any('select * from users where authID = $1', [authID])
     .then(function (data) {
       res.status(200)
         .json({
@@ -70,8 +71,6 @@ function updateUser(req, res, next){
       return next(err);
     });
 };
-
-
 
 function createSubject(req, res, next){
     db.none('insert into subjects(name)' + 'values(${name})', req.body)
@@ -215,6 +214,7 @@ function setAvailability(req, res, next) {
   });
 }
 
+<<<<<<< 97e68bc025840ac320b24c9762cdcbcdc994d566
 function findSubjectsByUser(req, res, next){
     var userID = req.params.id;
     db.any('select users.name, learning.subjectID, subjects.name from users inner join learning on users.id = learning.userID inner join subjects on learning.subjectID = subjects.id WHERE users.authid = $1', [userID])
@@ -248,6 +248,30 @@ function removeSubjectByUser(req, res, next){
     });
 };
 
+=======
+function setAuthID(req, res, next) {
+  var authID = req.params.authID;
+  console.log("SetAuthID Info ", email, authID);
+  var email = req.body.email;
+  db.result(
+    'update users set authID = $1 where email = $2',
+    [authID, email]
+  ).then(function(result) {
+    res.status(200)
+      .json({
+        status: 'success',
+        message: `Set AuthID of ${email} to ${authID}`
+      });
+  })
+  .catch(function(err) {
+    res.status(400)
+      .json({
+        status: 'failure',
+        message: err.message
+      });
+  });
+}
+>>>>>>> (fix) add email and authID on create user
 
 module.exports = {
   getAllUsers: getAllUsers,
@@ -263,7 +287,11 @@ module.exports = {
   getTeaching: getTeaching,
   removeUser: removeUser,
   setAvailability: setAvailability,
+<<<<<<< 97e68bc025840ac320b24c9762cdcbcdc994d566
   findSubjectsByUser: findSubjectsByUser,
   removeSubjectByUser: removeSubjectByUser
+=======
+  setAuthID: setAuthID
+>>>>>>> (fix) add email and authID on create user
 };
 
