@@ -1,4 +1,6 @@
 import { LOGIN_ACTIONS } from '../actions/login.actions';
+import { LOGOUT_ACTIONS } from '../actions/logout.actions';
+
 
 export interface ILoginState {
   userID: string;
@@ -17,6 +19,15 @@ export function loginReducer(
         let userID = action.userID;
         return Object.assign({}, state, {
           userID
+        });
+      case LOGIN_ACTIONS.SET_USER_DATA:
+        let userData = action.userData;
+        return Object.assign({}, state, {
+          userData: userData
+        });
+      case LOGOUT_ACTIONS.LOGOUT:
+          return Object.assign({}, state, {
+            userID: ''
         });
       default:
         return state;
