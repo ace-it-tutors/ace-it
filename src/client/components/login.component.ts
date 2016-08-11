@@ -32,7 +32,7 @@ import { LoginActions } from '../actions/login.actions';
                 <input type="password" class="form-control" #password placeholder="your password">
               </div>
               <button type="submit" class="btn btn-default" (click)="login(username.value, password.value)">Login</button>
-               <button type="submit" class="btn btn-default btn-primary" (click)="googleLogin()">Login with google</button>
+               <button type="submit" class="btn btn-default btn-primary" (click)="googleLogin(username.value)">Login with google</button>
               <h4>Don't have an account yet?</h4>
             </form>
             <button type="submit" class="btn btn-default btn-primary">
@@ -60,23 +60,24 @@ export class LoginComponent {
   login(username, password) {
     let email = username;
     this.auth.login(username, password, function(response){
-      if (response.idTokenPayload.sub){
+      if (response.idTokenPayload.sub) {
         let userID = response.idTokenPayload.sub;
-        this.loginActions.setLoginDispatch(userID, email);  
-      }     
+        //will set auth to state
+        this.loginActions.setAuthDispatch(userID, email);
+        this.goToHome();
+      }
     }.bind(this));
   }
 
-  getState (parameter: string) {
-    let state = this.ngRedux.getState();
-    return state[parameter];
-  }
-
-  googleLogin () {
+  googleLogin (username) {
     this.auth.googleLogin();
   }
 
   goToSignup() {
     this.router.navigate(['/sign-up']);
+  }
+
+  goToHome() {
+    this.router.navigate(['/home']);
   }
 }
