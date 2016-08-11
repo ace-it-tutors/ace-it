@@ -32,9 +32,8 @@ export class UserFormComponent {
     this.newUserService.createUser(dataObj)
     .subscribe(
       response => {
-        console.log(response);
+        console.log("response from sign up", response);
         this.router.navigate(['/login'])
-
       },
       error => console.log('error', error)
     );
