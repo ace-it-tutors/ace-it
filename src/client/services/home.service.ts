@@ -3,7 +3,7 @@ import { Http, Response } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
 import 'rxjs/Rx';
 @Injectable()
-export class UserService {
+export class HomeService {
   constructor (private http: Http) {}
 
   getUsers (): Observable<any> {
