@@ -1,6 +1,7 @@
 import { Injectable }      from '@angular/core';
 import { tokenNotExpired } from 'angular2-jwt';
 import { Router }          from '@angular/router';
+import { NgRedux }         from 'ng2-redux';
 
 // Avoid name not found warnings
 declare var Auth0: any;
@@ -15,16 +16,19 @@ export class Auth {
     callbackURL: process.env.AUTH0_CALLBACK_URL || 'http://localhost:3000/'
   });
 
-  constructor(private router: Router) {
-    var result = this.auth0.parseHash(window.location.hash);
-
-    if (result && result.idToken) {
-      console.log(result);
-      localStorage.setItem('id_token', result.idToken);
-      this.router.navigate(['/home']);
-    } else if (result && result.error) {
-      alert('error: ' + result.error);
-    }
+  constructor(
+    private router: Router,
+    private ngRedux: NgRedux<any>
+  ) {
+      var result = this.auth0.parseHash(window.location.hash);
+      if (result && result.idToken) {
+        console.log(result);
+        localStorage.setItem('id_token', result.idToken);
+        localStorage.setItem('authID', result.idTokenPayload.sub);
+        this.router.navigate(['/home']);
+      } else if (result && result.error) {
+        alert('error: ' + result.error);
+      }
   }
 
   public signUp(model, callback) {
@@ -64,9 +68,15 @@ export class Auth {
     return tokenNotExpired();
   };
 
+  public isAuthenticated() {
+    // Check if there is an authentication key on state
+    return this.ngRedux.getState().login.length>0;
+  };
+
   public logout() {
     // Remove token from localStorage
     localStorage.removeItem('id_token');
+    localStorage.removeItem('authID');
   };
 }
 
