@@ -53,14 +53,23 @@ export class LoginComponent {
     private auth: Auth,
     private router: Router,
     private ngRedux: NgRedux<IAppState>,
-    private actions: LoginActions
+    private loginActions: LoginActions
+
     ) { }
 
   login(username, password) {
+    let email = username;
     this.auth.login(username, password, function(response){
-      let userID = response.idTokenPayload.sub;
-      this.actions.setLoginDispatch(userID);
+      if (response.idTokenPayload.sub){
+        let userID = response.idTokenPayload.sub;
+        this.loginActions.setLoginDispatch(userID, email);  
+      }     
     }.bind(this));
+  }
+
+  getState (parameter: string) {
+    let state = this.ngRedux.getState();
+    return state[parameter];
   }
 
   googleLogin () {
