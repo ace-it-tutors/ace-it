@@ -1,9 +1,10 @@
 import { NgRedux } from 'ng2-redux';
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http } from '@angular/http';
 
 export const LOGIN_ACTIONS = {
-  SET_USER_ID: 'SET_USER_ID'
+  SET_USER_ID: 'SET_USER_ID',
+  SET_USER_DATA: 'SET_USER_DATA'
 };
 
 @Injectable()
@@ -16,36 +17,41 @@ export class LoginActions {
     private http: Http
     ) {}
 
-  setLoginDispatch(authID: string, email: string) {
+
+  setAuthDispatch(authID: string, email: string) {
     const envelope = {
       authID: authID,
       email: email
-    }
+    };
 
-    //call local setAuthID function
-    this.setAuthID(authID, envelope)
+    this.setAuthID(authID, envelope);
+    this.setAuthState(authID);
+  }
 
-    this.ngRedux.dispatch({
+  private setAuthID(authID: string, data: Object) {
+    return this.http.post(this.userUrl + authID, data);
+  }
+
+  private setAuthState(authID: string) {
+   this.ngRedux.dispatch(this.setAuth(authID));
+  }
+
+  private setAuth(authID: string) {
+    return {
       type: LOGIN_ACTIONS.SET_USER_ID,
       userID: authID
-    });
-    
-    this.getUserData(authID);
+    };
   }
 
-  //Set AuthID in database
-  private setAuthID(authID: string, data: Object) {
-    this.http.post(this.userUrl + authID, data)
-      .subscribe(
-        (response) => console.log(response)
-      )
-  }
+  setDataDispatch(userData: Object) {
+      this.ngRedux.dispatch(this.setUserData(userData));
+    }
 
-  private getUserData(authID: string) {
-     this.http.get(this.userUrl + authID)
-      .subscribe (
-        (response) => console.log(response)
-      )
+  private setUserData(userData: Object) {
+    return {
+      type: LOGIN_ACTIONS.SET_USER_DATA,
+      userData: userData
+    };
   }
 
 }
