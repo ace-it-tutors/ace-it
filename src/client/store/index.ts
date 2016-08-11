@@ -8,7 +8,8 @@ export interface IAppState {
   counter?: number;
   search?: ISearchState;
   userID?: ILoginState;
-  teacher?: ITeacherState
+  teacher?: ITeacherState;
+  userData?: ILoginState;
 };
 
 export const rootReducer = combineReducers<IAppState>({
