@@ -13,7 +13,7 @@ var PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
 app.get('/api/users', db.getAllUsers);
-app.get('/api/users/:id', db.getSingleUser);
+app.get('/api/users/:authID', db.getSingleUser);
 app.get('/api/subject', db.getAllSubjects);
 app.get('/api/teaching/:id', db.getSubjectForTeacher);
 app.get('/api/teaching', db.getTeaching);
@@ -22,7 +22,8 @@ app.post('/api/users', db.createUser);
 app.post('/api/subject', db.createSubject);
 app.post('/api/learning', db.learningSubject);
 app.post('/api/teaching', db.teachingSubject);
-app.put('/api/users/:id', db.updateUser);
+app.post('/api/users/:authID', db.setAuthID);
+app.put('/api/users/:authID', db.updateUser);
 app.delete('/api/users/:id', db.removeUser);
 app.post('/api/available/:authID', db.setAvailability);
 app.get('/api/learning/:id', db.findSubjectsByUser);
