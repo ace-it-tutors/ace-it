@@ -18,7 +18,7 @@ export class TeacherSocketService {
 
   acceptSession(session) {
     const teacherID = this.ngRedux.getState().login.userData.authid;
-    const studentID = session.student.userID;
+    const studentID = session.studentauthid;
 
     this.socket.acceptSession(teacherID, studentID);
   }

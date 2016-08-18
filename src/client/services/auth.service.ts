@@ -41,12 +41,13 @@ export class Auth {
   ) {
     this.userData$ = new Subject();
 
-    var result = this.auth0.parseHash(window.location.hash);
-    if (result && result.idToken) {
+    const idToken = this.getIdToken();
+
+    if (idToken) {
+      localStorage.setItem('id_token', idToken);
       // this is the user's specific id
-      let id_token = result.idToken;
       //fetch auth0 profile calls auth0, returns a profile object
-      this.fetchAuth0Profile(id_token, function(profile){
+      this.fetchAuth0Profile(idToken, function(profile){
         //format the profile for use in the DB
         let userProfile = {
           email : profile.email,
@@ -55,9 +56,16 @@ export class Auth {
         //set profile checks if the user is in the db
         this.setProfile(userProfile.authid, userProfile);
       }.bind(this));
-    } else if (result && result.error) {
-      alert('error: ' + result.error);
     }
+  }
+
+  public getIdToken() {
+    const storedIdToken = localStorage.getItem('id_token');
+
+    const redirectHash = this.auth0.parseHash(window.location.hash);
+    const redirectIdToken = redirectHash && redirectHash.idToken;
+
+    return storedIdToken || redirectIdToken;
   }
 
   public fetchAuth0Profile (id_token: string, callback: Function) {
@@ -131,7 +139,7 @@ export class Auth {
       username: model.email,
       password: model.password
     });
-  };
+  }
 
   public login(username, password, callback) {
     this.auth0.login({
@@ -140,7 +148,7 @@ export class Auth {
       email: username,
       password: password,
     });
-  };
+  }
 
   public googleLogin() {
     this.auth0.login({
@@ -148,17 +156,17 @@ export class Auth {
     }, function(err) {
       if (err) alert('something went wrong: ' + err.message);
     });
-  };
+  }
 
   // Listening for the authenticated event
   public authenticated() {
     // Check if there's an unexpired JWT
     return tokenNotExpired();
-  };
+  }
 
   public isAuthenticated() {
     return !!this.ngRedux.getState()['login']['userData'];
-  };
+  }
 
   public isTeacher() {
     let currState = this.ngRedux.getState()['login']['userData'];
@@ -167,13 +175,12 @@ export class Auth {
       teacher = currState.teacher;
     }
     return !!teacher;
-  };
+  }
 
   public logout() {
     // Remove token from localStorage
     localStorage.removeItem('id_token');
-    localStorage.removeItem('authID');
-  };
+  }
 
   private extractData(res: Response) {
     let body = res.json();

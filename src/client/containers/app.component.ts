@@ -52,6 +52,12 @@ export class AppComponent {
 
   onNewUserData(userData) {
     this.loginActions.setDataDispatch(userData);
+
+    this.socket.connect(userData.authid);
+
+    if (userData.teacher) {
+      this.teacherSocket.init();
+    }
   }
 
   ngOnInit() {

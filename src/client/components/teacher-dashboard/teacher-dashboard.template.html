@@ -7,7 +7,7 @@
   </div>
   <div>
     <ul *ngFor="let session of sessions$ | async">
-      <li> {{ session.student.name }} </li>
+      <li> {{ session.studentname }} </li>
       <button
         (click)="teacherSocket.acceptSession(session)"
       >

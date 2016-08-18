@@ -31,10 +31,3 @@ export class TeacherDashboardComponent {
     this.teacherSocket.acceptSession(session);
   }
 }
-/*
- <label for="subject" *ngIf="isTeacherSelected" >
-   What subject do you teach?</label>
-  <span tags ngControl='model.teachingSubjects'
-  model='model.teachingSubjects'
-  ng-change="model.teachingSubjects = " *ngIf="isTeacherSelected" ></span>
-*/

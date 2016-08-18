@@ -31,8 +31,13 @@ function getStudentRequests(req, res, next) {
 function getTeacherRequests(req, res, next) {
   var authID = req.params.authID;
 
-  db.any(`SELECT * FROM instantSessionRequests AS i
+  db.any(`SELECT
+      studentauthid, teacherauthid, i.id as sessionid,
+      u.name as studentname, s.id as subjectid,
+      s.name as subjectname
+      FROM instantSessionRequests AS i
       INNER JOIN subjects AS s ON i.subjectID = s.id
+      INNER JOIN users AS u ON u.authid = i.studentauthid
       WHERE i.teacherAuthId=$1`, [authID])
     .then(respondWithData(res, 'Found teacher\'s instant session requests'))
     .catch(catchError(next));
