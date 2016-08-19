@@ -31,9 +31,17 @@ import { ProgressBar, TabView, TabPanel, InputText, Button, Calendar } from 'pri
       background-color: white;
       cursor: pointer;
     }
-     label {
+    label {
       font-family: 'Roboto', sans-serif;
       color: #ff9f4f;
+    }
+    .result {
+      cursor: pointer;
+      border: 1px solid #33495f;
+      border-radius: 5px;
+      padding: 10px;
+      color:  #33495f;
+      width: 40%
     }
   `]
 })
