@@ -78,7 +78,7 @@
             </div>
         </div>
     </div>
-     <div class="date-filter col-xs-5"> 
+     <div class="date-filter col-xs-5 appointments"> 
             <input class="ui-widget-content ui-widget" type="date" [(ngModel)]="inputDate">
             <button  class="btn btn-default" label="Show All Appointments" *ngIf="filter === true" (click)="filter = false">Show All Appointments</button>
             <button  class="btn btn-default" label="Filter by Date" *ngIf="filter === false" (click)="filter = true">Filter by Date</button>
