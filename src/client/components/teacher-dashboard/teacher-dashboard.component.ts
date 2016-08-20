@@ -5,9 +5,13 @@ import { IAppState } from '../../store/index';
 import { TeacherActions } from '../../actions';
 import { TeacherSocketService } from '../../services/teacher-socket.service';
 import { TeacherAppointmentComponent } from '../appointments/teacherAppointment.component';
+import { TeacherProfileComponent } from '../profile/teacher-profile.component';
+import { TeacherSubjectComponent } from './teacher-subjects.component';
+import { TabView, TabPanel } from 'primeng/primeng';
+
 @Component({
   selector: 'teacher-dashboard',
-  directives: [ TeacherAppointmentComponent ],
+  directives: [ TeacherAppointmentComponent, TeacherProfileComponent, TeacherSubjectComponent, TabView, TabPanel ],
   providers: [ TeacherActions ],
   styles: [`
     h3 {
@@ -31,6 +35,13 @@ import { TeacherAppointmentComponent } from '../appointments/teacherAppointment.
     }
     .notAvailable {
       background-color: red;
+    }
+    .teacherdash {
+      width: 40%;
+      margin: 5px;
+      padding: 5px;
+      font-family: 'Roboto', sans-serif;
+      color: #33495f;
     }
   `],
   template: require('./teacher-dashboard.template.html')

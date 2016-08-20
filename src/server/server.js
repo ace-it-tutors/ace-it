@@ -58,6 +58,7 @@ app.get('/api/learning', db.getLearning);
 app.get('/api/learning/:id', db.findSubjectsByUser);
 app.post('/api/learning', db.learningSubject);
 app.put('/api/learning', db.levelUp);
+app.put('/api/learning', db.levelUp);
 app.delete('/api/learning/:userID/:subjectID', db.removeSubjectByUser);
 
 // ********************* REVIEWS ******************* //
@@ -83,6 +84,7 @@ app.delete('/api/subject/:id', db.removeSubject);
 
 app.get('/api/teachers', db.getAllTeachers);
 app.get('/api/teachers/:id', db.getTeachersInfo);
+app.put('/api/teachers/rate/', db.updateRate);
 
 // ******************** TEACHING ******************* //
 

@@ -16,8 +16,14 @@ export class StudentDashboardService {
       .catch(this.handleError);
   }
 
-  findSubjectsByUser(id) {
-    return this.http.get('/api/learning/' + id)
+  findSubjectsByUser(authid) {
+    return this.http.get('/api/learning/' + authid)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  findSubjectsByTeacher(id) {
+    return this.http.get('/api/teaching/' + id)
       .map(this.extractData)
       .catch(this.handleError);
   }
@@ -32,6 +38,12 @@ export class StudentDashboardService {
 
   addSubjectForStudent(model) {
     return this.http.post('/api/learning', model)
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
+  addSubjectForTeacher(model) {
+    return this.http.post('/api/teaching', model)
       .map(this.extractData)
       .catch(this.handleError);
   }

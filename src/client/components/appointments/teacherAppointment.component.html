@@ -1,13 +1,10 @@
 
-
-<button class="btn btn-default"
-        (click)="getAppointments(); apptListOpen = !apptListOpen">Get Appointments</button>
-<div *ngIf="apptListOpen === true" class="container appointments">
+<div class="container appointments">
     <div class="appointment-list col-xs-5" >
-    <h1>Confirmed Appointments</h1>
+    <h3>Confirmed Appointments</h3>
         <div class="filtered" *ngIf="filter === true">
-            <div class="appointments"  *ngFor="let appointment of appointments | filterdate:inputDate | confirmedTeacher:true">
-                    <h3>Subject: {{ appointment.name }}</h3>
+            <div class="apptbox"  *ngFor="let appointment of appointments | filterdate:inputDate | confirmedTeacher:true">
+                    <h5>Subject: {{ appointment.name }}</h5>
                     <p>Date: {{ appointment.start | date:'fullDate'  }}
                     <p>Time: {{ appointment.start | date: 'shortTime' }}
                     <p>Student: {{ appointment.username }}</p>
@@ -15,18 +12,18 @@
             </div>
         </div>
         <div class="showAll" *ngIf="filter === false">
-            <div class="appointments"  *ngFor="let appointment of appointments | confirmedTeacher:true">
-                    <h3>Subject: {{ appointment.name }}</h3>
+            <div class="apptbox"  *ngFor="let appointment of appointments | confirmedTeacher:true">
+                    <h5>Subject: {{ appointment.name }}</h5>
                     <p>Date: {{ appointment.start | date:'fullDate'  }}
                     <p>Time: {{ appointment.start | date: 'shortTime' }}
                     <p>Student: {{ appointment.username }}</p>
                     <button class="btn btn-default" (click)="removeAppt(appointment.id)">Remove</button>
             </div>
         </div>
-        <h1>Appointment Requests</h1>
+        <h3>Appointment Requests</h3>
         <div class="showAll">
-            <div class="appointments"  *ngFor="let appointment of appointments | confirmedTeacher:false">
-                    <h3>Subject: {{ appointment.name }}</h3>
+            <div class="apptbox"  *ngFor="let appointment of appointments | confirmedTeacher:false">
+                    <h5>Subject: {{ appointment.name }}</h5>
                     <p>Date: {{ appointment.start | date:'fullDate'  }}
                     <p>Time: {{ appointment.start | date: 'shortTime' }}
                     <p>Student: {{ appointment.username }}</p>

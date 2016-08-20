@@ -21,7 +21,14 @@ function getAllTeachers(req, res, next){
     .catch(catchError(next));
 }
 
+function updateRate(req, res, next) {
+  db.any('UPDATE teachers SET rate = ${rate} WHERE id IN (select teacherid from users where authid = ${authid})', req.body)
+    .then(respondWithData(res, "Update Hourly Rate"))
+    .catch(catchError(next));
+}
+
 module.exports = {
   getTeachersInfo: getTeachersInfo,
-  getAllTeachers: getAllTeachers
+  getAllTeachers: getAllTeachers,
+  updateRate: updateRate
 }
