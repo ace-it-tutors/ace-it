@@ -1,0 +1,73 @@
+
+<div class="container profile">
+    <h1>Update</h1>
+    <form> 
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input 
+                [(ngModel)] = "userData.name"
+                type="text"
+                class="form-control"
+            >
+        </div>
+           <div class="form-group">
+            <label for="username">Username</label>
+            <input 
+                [(ngModel)] = "userData.username"
+                type="text"
+                class="form-control"
+            >
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input 
+                [(ngModel)] = "userData.email"
+                type="text"
+                class="form-control"
+            >
+        </div>
+        <div class="form-group">
+            <label for="teacher">I am a teacher</label>
+            <input 
+                *ngIf = "!isTeacher()"
+                [(ngModel)] = "userData.teacher"
+                type="checkbox" 
+                name="vehicle" 
+                value="true"
+               >
+        </div>
+        <button 
+            *ngIf="isTeacher()"
+            type="submit" 
+            class="btn btn-default"
+            (click)="updateUser({teacher: false}); profileFormOpen=false"
+            label="Stop Teaching"
+            >Stop Teaching</button>
+
+        <button 
+                type="submit" 
+                class="btn btn-default"
+                (click)="updateUser(userData); profileFormOpen=false"
+                label="Update Profile"
+                >Update Profile</button>
+   </form>
+   <hr>
+   <form>
+        <div class="form-group"> 
+            <label for="rate">Hourly Rate: ${{hourlyRate}}</label>
+            <input 
+                type="range"
+                name="rate"
+                min="5"
+                max="50"
+                step="1" 
+                [(ngModel)]="hourlyRate">
+        <br/>
+        <button 
+            type="submit"
+            class="btn btn-default"
+            (click)="updateRate()"
+            >Update Rate</button>
+        </div>
+    </form>
+</div>
