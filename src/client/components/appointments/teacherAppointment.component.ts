@@ -28,6 +28,13 @@ import { ConfirmedTeacherPipe } from './pipes/appoinment.confirmedTeacher-pipe';
       font-family: 'Roboto', sans-serif;
       color: #ff9f4f;
     }
+    .apptbox {
+      border: 1px solid #33495f;
+      border-radius: 5px;
+      padding: 10px;
+      color:  #33495f;
+      width: 100%
+    }
     `]
 })    
 
@@ -59,8 +66,7 @@ export class TeacherAppointmentComponent {
     getSubjects() {
         this.appointmentService.getSubjects()
             .subscribe(
-                data => this.subjects = data
-            );
+                data => this.subjects = data);
     }
 
 
@@ -113,7 +119,11 @@ export class TeacherAppointmentComponent {
      getStudentID(){
         let authID = this.ngRedux.getState().login['userData'].authid;
         this.appointmentService.getUserID(authID)
-            .subscribe( data => this.studentid = data[0].id);
+            .subscribe( data => {
+                                this.studentid = data[0].id
+                                this.getAppointments()
+                        }
+            );
     }    
     
 
