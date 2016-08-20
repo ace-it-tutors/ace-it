@@ -47,7 +47,7 @@ import { InputText, Button } from 'primeng/primeng';
 
         <div class="subjectSearch" >
             <div class="input-field col s12">
-              <input id="subject" type="text" class="validate filter-input" placeholder="What do want to teach?" [(ngModel)]=query (keyup)=filter() size="35">
+              <input id="subject" type="text" class="validate filter-input" placeholder="What do you want to teach?" [(ngModel)]=query (keyup)=filter() size="35">
               <button class="btn btn-default" label="Add Subject" (click)="addSubject(query); clearSearch()">Add Subject</button>
             </div>
             <div class="suggestions" *ngIf="filteredList.length > 0">
