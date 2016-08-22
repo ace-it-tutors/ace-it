@@ -42,8 +42,15 @@ ConnectionManager.prototype.onSessionAccept = function(data) {
   var session = new Session(sessionID);
   this.sessions[sessionID] = session;
 
-  session.addTeacher(this.getConnection(teacherID));
-  session.addStudent(this.getConnection(studentID));
+  var studentSocket = this.getConnection(studentID);
+  var teacherSocket = this.getConnection(teacherID);
+
+  studentSocket.setCurrentSessionID(sessionID);
+  teacherSocket.setCurrentSessionID(sessionID);
+
+  session.addTeacher(studentSocket);
+  session.addStudent(teacherSocket);
+
   session.start(data.teacherID, data.studentID);
 };
 
