@@ -20,23 +20,23 @@ ConnectionManager.prototype.setConnection = function(id, socket) {
 
 ConnectionManager.prototype.onConnect = function(socket) {
   var userID = socket.meta.getUserID();
-  var oldSocket = this.getConnection(userID);
 
-  if (oldSocket) {
-    this.reconnectToSession(oldSocket, socket);
-  }
+  this.trySessionReconnect(socket);
 
   this.setConnection(userID, socket);
 };
 
-ConnectionManager.prototype.reconnectToSession = function(oldSocket, newSocket) {
-  var userID = oldSocket.meta.getUserID();
-  var sessionID = oldSocket.meta.getCurrentSessionID();
+ConnectionManager.prototype.trySessionReconnect = function(newSocket) {
+  var userID = newSocket.meta.getUserID();
 
-  if (sessionID) {
-    var session = this.sessions[sessionID];
-    session.reconnect(oldSocket, newSocket);
-  }
+  var oldSocket = this.getConnection(userID);
+  if (!oldSocket) return;
+
+  var sessionID = oldSocket.meta.getCurrentSessionID();
+  var session = this.sessions[sessionID];
+  if (!session) return;
+
+  session.reconnect(oldSocket, newSocket);
 };
 
 ConnectionManager.prototype.onDisconnect = function(socket) {
