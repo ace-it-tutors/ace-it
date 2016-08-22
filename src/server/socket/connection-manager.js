@@ -10,12 +10,18 @@ function ConnectionManager() {
   }.bind(this));
 }
 
-ConnectionManager.prototype.addConnection = function(id, socket) {
-  this.connections[id] = socket;
-};
-
 ConnectionManager.prototype.getConnection = function(id) {
   return this.connections[id];
+};
+
+ConnectionManager.prototype.onConnect = function(socket) {
+  var userID = socket.meta.getUserID();
+
+  this.connections[userID] = socket;
+};
+
+ConnectionManager.prototype.onDisconnect = function(socket) {
+  var userID = socket.meta.getUserID();
 };
 
 ConnectionManager.prototype.onSessionRequest = function(data) {
