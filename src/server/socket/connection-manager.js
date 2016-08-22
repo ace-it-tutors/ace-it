@@ -67,8 +67,8 @@ ConnectionManager.prototype.onSessionAccept = function(data) {
   studentSocket.meta.setCurrentSessionID(sessionID);
   teacherSocket.meta.setCurrentSessionID(sessionID);
 
-  session.addTeacher(studentSocket);
-  session.addStudent(teacherSocket);
+  session.addStudent(studentSocket);
+  session.addTeacher(teacherSocket);
 
   session.start(data.teacherID, data.studentID);
 };
