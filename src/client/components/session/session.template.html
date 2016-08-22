@@ -9,6 +9,9 @@
     <div *ngFor="let message of messages$ | async">
       <div> {{ message.from }}: {{ message.message }} </div>
     </div>
+    <span class="vid">
+      <video-chat></video-chat>
+    </span>
   </div>
   <button (click)="leaveSession()">Leave Session</button>
 </div>
