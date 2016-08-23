@@ -17,6 +17,7 @@ export class SocketService {
     'session-request',
     'session-start',
     'session-message',
+    'session-reconnect',
     'session-requests-teacher-sync',
     'session-requests-student-sync'
   ];
@@ -44,6 +45,11 @@ export class SocketService {
     this.socket.on(
       'session-requests-teacher-sync',
       authid => this.teacherActions.syncTeacherRequestsDispatch(authid)
+    );
+
+    this.socket.on(
+      'session-reconnect',
+      sessionData => this.sessionActions.setSessionDataDispatch(sessionData)
     );
 
     // need to move this somewhere better, preferably separating

@@ -9,12 +9,16 @@ export interface ISessionState {
   messages: IMessageState[];
   role: string;
   sessionID: string;
+  studentID: string;
+  teacherID: string;
 }
 
 const INIT_STATE: ISessionState = {
   messages: [],
   role: '',
-  sessionID: ''
+  sessionID: '',
+  studentID: '',
+  teacherID: ''
 };
 
 export function sessionReducer(

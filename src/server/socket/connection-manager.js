@@ -10,12 +10,37 @@ function ConnectionManager() {
   }.bind(this));
 }
 
-ConnectionManager.prototype.addConnection = function(id, socket) {
+ConnectionManager.prototype.getConnection = function(id) {
+  return this.connections[id];
+};
+
+ConnectionManager.prototype.setConnection = function(id, socket) {
   this.connections[id] = socket;
 };
 
-ConnectionManager.prototype.getConnection = function(id) {
-  return this.connections[id];
+ConnectionManager.prototype.onConnect = function(socket) {
+  var userID = socket.meta.getUserID();
+
+  this.trySessionReconnect(socket);
+
+  this.setConnection(userID, socket);
+};
+
+ConnectionManager.prototype.trySessionReconnect = function(newSocket) {
+  var userID = newSocket.meta.getUserID();
+
+  var oldSocket = this.getConnection(userID);
+  if (!oldSocket) return;
+
+  var sessionID = oldSocket.meta.getCurrentSessionID();
+  var session = this.sessions[sessionID];
+  if (!session) return;
+
+  session.reconnect(oldSocket, newSocket);
+};
+
+ConnectionManager.prototype.onDisconnect = function(socket) {
+  var userID = socket.meta.getUserID();
 };
 
 ConnectionManager.prototype.onSessionRequest = function(data) {
@@ -36,8 +61,15 @@ ConnectionManager.prototype.onSessionAccept = function(data) {
   var session = new Session(sessionID);
   this.sessions[sessionID] = session;
 
-  session.addTeacher(this.getConnection(teacherID));
-  session.addStudent(this.getConnection(studentID));
+  var studentSocket = this.getConnection(studentID);
+  var teacherSocket = this.getConnection(teacherID);
+
+  studentSocket.meta.setCurrentSessionID(sessionID);
+  teacherSocket.meta.setCurrentSessionID(sessionID);
+
+  session.addStudent(studentSocket);
+  session.addTeacher(teacherSocket);
+
   session.start(data.teacherID, data.studentID);
 };
 
