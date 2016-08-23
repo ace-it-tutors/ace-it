@@ -22,10 +22,14 @@ Session.prototype.leave = function(socket) {
 };
 
 Session.prototype.reconnect = function(oldSocket, newSocket) {
+  var userID = newSocket.meta.getUserID();
   var replacer = socket => socket === oldSocket ? newSocket : socket;
 
   this.students = _.map(this.students, replacer);
   this.teachers = _.map(this.teachers, replacer);
+
+  newSocket.meta.setCurrentSessionID(this.id);
+  newSocket.emit('session-reconnect', this.getSessionData(userID));
 };
 
 Session.prototype.start = function(teacherID, studentID) {
@@ -64,6 +68,18 @@ Session.prototype.wrapData = function(role, data) {
     role,
     data,
     id: this.id
+  };
+};
+
+Session.prototype.getSessionData = function(userID) {
+  var studentID = this.students[0].meta.getUserID();
+  var teacherID = this.teachers[0].meta.getUserID();
+
+  return {
+    sessionID: this.id,
+    studentID: studentID,
+    teacherID: teacherID,
+    messages: this.messages
   };
 };
 
