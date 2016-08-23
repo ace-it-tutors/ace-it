@@ -90,6 +90,7 @@ ConnectionManager.prototype.onSessionLeave = function(data) {
     announce: true
   };
 
+  leavingSocket.meta.clearCurrentSessionID();
   session.leave(leavingSocket);
   session.emitMessage(message);
 };

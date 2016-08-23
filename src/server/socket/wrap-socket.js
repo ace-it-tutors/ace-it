@@ -1,11 +1,10 @@
-var _ = require('lodash');
-
 function wrapSocket(socket) {
   socket.meta = {
     sessionID: null,
+    userID: socket.handshake.query.userID,
 
     getUserID: function() {
-      return socket.handshake.query.userID;
+      return socket.meta.userID;
     },
 
     getCurrentSessionID: function() {
@@ -14,9 +13,12 @@ function wrapSocket(socket) {
 
     setCurrentSessionID: function(sessionID) {
       socket.meta.sessionID = sessionID;
-    }
-  }
+    },
 
+    clearCurrentSessionID: function() {
+      socket.meta.setCurrentSessionID(null);
+    }
+  };
 }
 
 module.exports = wrapSocket;
