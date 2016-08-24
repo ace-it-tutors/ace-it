@@ -38,7 +38,12 @@ export class SessionComponent {
       this.state.getAuthID(),
       this.state.getUserName()
     );
-    this.router.navigate(['/session-end']);
+
+    if (this.state.isTeacher()) {
+      this.router.navigate(['/teacher-dash']);
+    } else {
+      this.router.navigate(['/session-end']);
+    }
   }
 
   onKeypress(e) {
