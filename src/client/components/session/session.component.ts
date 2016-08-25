@@ -131,6 +131,6 @@ export class SessionComponent {
     }
   }
   setScroll(){
-
+    
   };
 }
